@@ -156,6 +156,24 @@ controller
   "_class": "com.tiketbakend.tiket.inventorymongodb.model.stock"
 }
 
+#Stock logic 
+
+Purchase :
+when i add purchase then add the amount of every item in prucamount and quantity in quantityinstock of mongodb document
+
+When i update purchase then first reset the stock by subtracting the amount and quantity of each item and
+then add the amount and quantity of updated purchase
+
+Similarly,
+Sale :
+When i add sale it reflects 3 fields saleamount,quantitysold and quantityinstock
+Add amount of sale in saleamount ,add quantity in quantitysold and subtract quantity from
+quantityinstock of mongodb document of corresponding item
+
+When i update sale first i reset it by subtracting amount of sale from saleamount ,subtracting quantity from quantitysold 
+and add quantity in quantityinstock of mongodb document of corresponding item
+and then again add amount of sale in saleamount ,add quantity in quantitysold and subtract quantity from
+quantityinstock of mongodb document of corresponding updateditem
 
 
 Complete file structure
