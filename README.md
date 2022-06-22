@@ -155,4 +155,61 @@ controller
   "_class": "com.tiketbakend.tiket.inventorymongodb.model.stock"
 }
 
+
+
+Complete file structure
+
+─com
+    └───tiketbakend
+        └───tiket
+            │   TiketApplication.java
+            │
+            ├───controller
+            │       ItemController.java
+            │       ItemGroupController.java
+            │       PartyController.java
+            │       PurchaseController.java
+            │       SaleController.java
+            │       StockController.java
+            │
+            ├───exception
+            │       ResourceNotFoundException.java
+            │
+            ├───model
+            │   ├───mongodb
+            │   │       Stock.java
+            │   │
+            │   └───mysqldb
+            │           ItemGroupMaster.java
+            │           ItemMaster.java
+            │           PartyMaster.java
+            │           PurchaseHead.java
+            │           PurchaseItems.java
+            │           SaleHead.java
+            │           SaleItems.java
+            │
+            ├───repository
+            │   ├───mongodb
+            │   │       StockRepository.java
+            │   │
+            │   └───mysqldb
+            │           ItemGroupMasterRepository.java
+            │           ItemMasterRepository.java
+            │           PartyMasterRepository.java
+            │           PurchaseHeadRepository.java
+            │           PurchaseItemsRepository.java
+            │           SaleHeadRepository.java
+            │           SaleItemsRepository.java
+            │
+            ├───service
+            │       ItemGroupMasterService.java
+            │       ItemMasterService.java
+            │       PartyMasterService.java
+            │       PurchaseService.java
+            │       SaleService.java
+            │
+            └───util
+                    ApiCall.java
+                    Item.java
+                    SalePurchase.java
 ```
