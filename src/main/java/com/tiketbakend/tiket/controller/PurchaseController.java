@@ -27,11 +27,10 @@ public class PurchaseController {
     @Autowired
     private ItemMasterRepository itemrepo;
 
-    @Autowired
-    private StockRepository stk;
+
 
     @Autowired
-    private PurchaseService service=new PurchaseService(stk);
+    private PurchaseService service=new PurchaseService();
 
     @GetMapping
     public List<SalePurchase> getAll(){

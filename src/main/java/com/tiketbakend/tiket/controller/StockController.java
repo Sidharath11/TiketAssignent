@@ -4,8 +4,8 @@ import com.tiketbakend.tiket.model.mongodb.Stock;
 import com.tiketbakend.tiket.repository.mongodb.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/v1/stock")
@@ -14,28 +14,28 @@ public class StockController {
     private StockRepository repo;
 
     @GetMapping
-    public List<Stock> getAll(){
+    public Flux<Stock> getAll(){
         return repo.findAll();
     }
     @GetMapping(value = "/ItemId/{Id}")
-    public Stock getAllByItemId(@PathVariable int Id){
+    public Mono<Stock> getAllByItemId(@PathVariable int Id){
         return repo.findItemById(Id);
     }
     @GetMapping(value = "/ItemGroupId/{Id}")
-    public List<Stock> getAllByItemGroupId(@PathVariable int Id){
+    public Flux<Stock> getAllByItemGroupId(@PathVariable int Id){
         return repo.findItemByGroupId(Id);
     }
 
     @PostMapping
-    public Stock create(@RequestBody Stock newpt){
+    public Mono<Stock> create(@RequestBody Stock newpt){
         return repo.save(newpt);
     }
     @PutMapping(value = "/PurcItemId/{Id}")
-    public Stock updateByPurcItemId(@PathVariable int Id, @RequestBody Stock updatedata){
+    public Mono<Stock> updateByPurcItemId(@PathVariable int Id, @RequestBody Stock updatedata){
 
-        Stock ht=new Stock();
+        Stock ht= null;
         try{
-            ht=repo.findItemById(Id);
+            ht=repo.findItemById(Id).block();
         }
         catch (Exception e){}
         if(ht!=null) {
@@ -50,11 +50,11 @@ public class StockController {
 
     }
     @PutMapping(value = "/Reset/PurcItemId/{Id}")
-    public Stock resetByPurcItemId(@PathVariable int Id, @RequestBody Stock updatedata){
+    public Mono<Stock> resetByPurcItemId(@PathVariable int Id, @RequestBody Stock updatedata){
 
-        Stock ht=new Stock();
+        Stock ht=null;
         try{
-            ht=repo.findItemById(Id);
+            ht=repo.findItemById(Id).block();
         }
         catch (Exception e){}
         if(ht!=null) {
@@ -69,11 +69,11 @@ public class StockController {
 
     }
     @PutMapping(value = "/SaleItemId/{Id}")
-    public Stock updateBySaleItemId(@PathVariable int Id, @RequestBody Stock updatedata){
+    public Mono<Stock> updateBySaleItemId(@PathVariable int Id, @RequestBody Stock updatedata){
 
-        Stock ht=new Stock();
+        Stock ht=null;
         try{
-            ht=repo.findItemById(Id);
+            ht=repo.findItemById(Id).block();
         }
         catch (Exception e){}
         if(ht!=null){
@@ -89,11 +89,11 @@ public class StockController {
     }
 
     @PutMapping(value = "/Reset/SaleItemId/{Id}")
-    public Stock reseteBySaleItemId(@PathVariable int Id, @RequestBody Stock updatedata){
+    public Mono<Stock> reseteBySaleItemId(@PathVariable int Id, @RequestBody Stock updatedata){
 
-        Stock ht=new Stock();
+        Stock ht=null;
         try{
-            ht=repo.findItemById(Id);
+            ht=repo.findItemById(Id).block();
         }
         catch (Exception e){}
         if(ht!=null){

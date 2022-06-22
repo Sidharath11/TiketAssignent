@@ -3,13 +3,12 @@ package com.tiketbakend.tiket.service;
 import com.tiketbakend.tiket.model.mongodb.Stock;
 import com.tiketbakend.tiket.model.mysqldb.SaleHead;
 import com.tiketbakend.tiket.model.mysqldb.SaleItems;
-import com.tiketbakend.tiket.repository.mongodb.StockRepository;
 import com.tiketbakend.tiket.repository.mysqldb.ItemMasterRepository;
 import com.tiketbakend.tiket.repository.mysqldb.PartyMasterRepository;
 import com.tiketbakend.tiket.repository.mysqldb.SaleHeadRepository;
 import com.tiketbakend.tiket.repository.mysqldb.SaleItemsRepository;
-import com.tiketbakend.tiket.util.ApiCall;
 import com.tiketbakend.tiket.util.Item;
+import com.tiketbakend.tiket.util.ReactiveApiCall;
 import com.tiketbakend.tiket.util.SalePurchase;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +19,7 @@ import java.util.List;
 @Component
 public class SaleService {
 
-    private StockRepository repo;
 
-    public SaleService(StockRepository stck){
-        this.repo=stck;
-    }
     public List<SalePurchase> getAll(SaleHeadRepository headrepo, SaleItemsRepository itemrepo){
         List<SalePurchase> sp=new ArrayList<>();
         List<Item> items=new ArrayList<>();
@@ -81,13 +76,13 @@ public class SaleService {
 
             purcitemrepo.save(pi);
             Stock stk=new Stock(pi.getItemmaster().getId(),pi.getItemmaster().getItemgroup().getId(),pi.getAmount(),0,pi.getQuantity(), pi.getQuantity());
-            ApiCall api=new ApiCall();
+            ReactiveApiCall api=new ReactiveApiCall();
             api.makePutApiCall("/SaleItemId/"+pi.getItemmaster().getId(),stk);
 
         }
 
 
-        return  new SaleService(repo).getById(phead.getId(),purcheadrepo,purcitemrepo);
+        return  new SaleService().getById(phead.getId(),purcheadrepo,purcitemrepo);
     }
 
     public SalePurchase getById( int Id,SaleHeadRepository headrepo, SaleItemsRepository itemrepo){
@@ -129,7 +124,7 @@ public class SaleService {
             purcitemrepo.save(pi);
 
             Stock stk=new Stock(pi.getItemmaster().getId(),pi.getItemmaster().getItemgroup().getId(),pi.getAmount(),0,pi.getQuantity(), pi.getQuantity());
-            ApiCall api=new ApiCall();
+            ReactiveApiCall api=new ReactiveApiCall();
             api.makePutApiCall("/Reset/SaleItemId/"+pi.getItemmaster().getId(),stk);
 }
         SaleHead phead=purcheadrepo.findByDeletedAndId(false,Id);
@@ -154,12 +149,12 @@ public class SaleService {
             purcitemrepo.save(pi);
 
             Stock stk=new Stock(pi.getItemmaster().getId(),pi.getItemmaster().getItemgroup().getId(),pi.getAmount(),0,pi.getQuantity(), pi.getQuantity());
-            ApiCall api=new ApiCall();
+            ReactiveApiCall api=new ReactiveApiCall();
             api.makePutApiCall("/SaleItemId/"+pi.getItemmaster().getId(),stk);
 
         }
 
-        return new SaleService(repo).getById(phead.getId(),purcheadrepo,purcitemrepo);
+        return new SaleService().getById(phead.getId(),purcheadrepo,purcitemrepo);
     }
 
     public String deleteById( int Id,SaleHeadRepository purcheadrepo,SaleItemsRepository purcitemrepo){
@@ -170,7 +165,7 @@ public class SaleService {
           purcitemrepo.save(pi);
 
             Stock stk=new Stock(pi.getItemmaster().getId(),pi.getItemmaster().getItemgroup().getId(),pi.getAmount(),0,pi.getQuantity(), pi.getQuantity());
-            ApiCall api=new ApiCall();
+            ReactiveApiCall api=new ReactiveApiCall();
             api.makePutApiCall("/Reset/SaleItemId/"+pi.getItemmaster().getId(),stk);
         }
         SaleHead p=purcheadrepo.findByDeletedAndId(false,Id);

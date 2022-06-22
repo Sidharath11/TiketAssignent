@@ -2,9 +2,9 @@ package com.tiketbakend.tiket.model.mongodb;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.Id;
 
 @Document(value = "stock")
 @Getter
@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class Stock {
 
     @Id
-    private int id;
+    private ObjectId id;
 
     private int itemid;
     private int itemgroupid;
