@@ -1,5 +1,7 @@
 package com.tiketbakend.tiket.inventorymysql.service;
 
+import com.tiketbakend.tiket.inventorymongodb.model.stock;
+import com.tiketbakend.tiket.inventorymongodb.Repository.StockRepository;
 import com.tiketbakend.tiket.inventorymysql.model.purchasehead;
 import com.tiketbakend.tiket.inventorymysql.model.purchaseitems;
 import com.tiketbakend.tiket.inventorymysql.repository.ItemMasterRepository;
@@ -17,6 +19,11 @@ import java.util.List;
 @Component
 public class purchaseservice {
 
+
+    private StockRepository repo;
+    public purchaseservice(StockRepository stck){
+        this.repo=stck;
+    }
     public List<SalePurchase> getAll(PurchaseHeadRepository headrepo, PurchaseItemsRepository itemrepo){
         List<SalePurchase> sp=new ArrayList<>();
         List<Item> items=new ArrayList<>();
@@ -71,9 +78,24 @@ public class purchaseservice {
             pi.setPurchasehead(phead);
 
             purcitemrepo.save(pi);
+
+
+            stock ht=new stock();
+            try{
+                ht=repo.findItemById(pi.getItemmaster().getId());
+            }
+            catch (Exception e){}
+            if(ht!=null) {
+                repo.delete(ht);
+            }
+                ht.setPurcamount(ht.getPurcamount()+pi.getAmount());
+                ht.setQuantityinstock(ht.getQuantityinstock()+ pi.getQuantity());
+                repo.save(ht);
+
+
         }
 
-        return  new purchaseservice().getById(phead.getId(),purcheadrepo,purcitemrepo);
+        return  new purchaseservice(repo).getById(phead.getId(),purcheadrepo,purcitemrepo);
     }
 
     public SalePurchase getById( int Id,PurchaseHeadRepository headrepo, PurchaseItemsRepository itemrepo){
@@ -92,6 +114,7 @@ public class purchaseservice {
                 item.setRate(pi.getRate());
                 item.setQuantity(pi.getQuantity());
                 items.add(item);
+
             }
             SalePurchase purchase=new SalePurchase();
             purchase.setPartyid(p.getParty().getId());
@@ -113,6 +136,19 @@ public class purchaseservice {
         for (purchaseitems pi:itm) {
             pi.setDeleted(true);
             purcitemrepo.save(pi);
+
+            stock ht=new stock();
+            try{
+                ht=repo.findItemById(pi.getItemmaster().getId());
+            }
+            catch (Exception e){}
+            if(ht!=null){
+                repo.delete(ht);
+                ht.setPurcamount(ht.getPurcamount()-pi.getAmount());
+                ht.setQuantityinstock(ht.getQuantityinstock()- pi.getQuantity());
+                repo.save(ht);
+
+            }
         }
         purchasehead phead=purcheadrepo.findByDeletedAndId(false,Id);
         phead.setTotalquantity(pt.getTotalquantity());
@@ -134,9 +170,22 @@ public class purchaseservice {
             pi.setPurchasehead(phead);
 
             purcitemrepo.save(pi);
+
+            stock ht=new stock();
+            try{
+                ht=repo.findItemById(pi.getItemmaster().getId());
+            }
+            catch (Exception e){}
+            if(ht!=null){
+                repo.delete(ht);
+                ht.setPurcamount(ht.getPurcamount()+pi.getAmount());
+                ht.setQuantityinstock(ht.getQuantityinstock()+ pi.getQuantity());
+                repo.save(ht);
+
+            }
         }
 
-        return new purchaseservice().getById(phead.getId(),purcheadrepo,purcitemrepo);
+        return new purchaseservice(repo).getById(phead.getId(),purcheadrepo,purcitemrepo);
     }
 
     public String deleteById( int Id,PurchaseHeadRepository purcheadrepo,PurchaseItemsRepository purcitemrepo){
@@ -145,10 +194,24 @@ public class purchaseservice {
         for (purchaseitems pi:it) {
           pi.setDeleted(true);
           purcitemrepo.save(pi);
+
+            stock ht=new stock();
+            try{
+                ht=repo.findItemById(pi.getItemmaster().getId());
+            }
+            catch (Exception e){}
+            if(ht!=null){
+                repo.delete(ht);
+                ht.setPurcamount(ht.getPurcamount()-pi.getAmount());
+                ht.setQuantityinstock(ht.getQuantityinstock()- pi.getQuantity());
+                repo.save(ht);
+
+            }
         }
         purchasehead p=purcheadrepo.findByDeletedAndId(false,Id);
         p.setDeleted(true);
         purcheadrepo.save(p);
+
 
         return "with id :"+Id+" is deleted";
     }

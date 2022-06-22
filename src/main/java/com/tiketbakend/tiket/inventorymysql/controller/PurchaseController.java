@@ -1,5 +1,6 @@
 package com.tiketbakend.tiket.inventorymysql.controller;
 
+import com.tiketbakend.tiket.inventorymongodb.Repository.StockRepository;
 import com.tiketbakend.tiket.inventorymysql.repository.ItemMasterRepository;
 import com.tiketbakend.tiket.inventorymysql.repository.PartyMasterRepository;
 import com.tiketbakend.tiket.inventorymysql.repository.PurchaseHeadRepository;
@@ -25,8 +26,12 @@ public class PurchaseController {
     private PartyMasterRepository partyrepo;
     @Autowired
     private ItemMasterRepository itemrepo;
+
     @Autowired
-    private purchaseservice service;
+    private StockRepository stk;
+
+    @Autowired
+    private purchaseservice service=new purchaseservice(stk);
 
     @GetMapping
     public List<SalePurchase> getAll(){

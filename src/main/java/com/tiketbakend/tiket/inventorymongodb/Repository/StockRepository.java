@@ -1,11 +1,12 @@
-package com.tiketbakend.tiket.inventorymongodb.repository;
+package com.tiketbakend.tiket.inventorymongodb.Repository;
 
 import com.tiketbakend.tiket.inventorymongodb.model.stock;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface StockRepository extends MongoRepository<stock, String> {
 
     @Query("itemid:'?0'}")

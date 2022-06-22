@@ -1,7 +1,7 @@
-package com.tiketbakend.tiket.inventorymongodb.controller;
+package com.tiketbakend.tiket.inventorymysql.controller;
 
 import com.tiketbakend.tiket.inventorymongodb.model.stock;
-import com.tiketbakend.tiket.inventorymongodb.repository.StockRepository;
+import com.tiketbakend.tiket.inventorymongodb.Repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

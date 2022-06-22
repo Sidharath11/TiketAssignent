@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 
-@Document(value = "stock",collation = "restaurant")
+@Document(value = "stock")
 @Getter
 @Setter
 public class stock {
@@ -18,10 +18,10 @@ public class stock {
     private int itemgroupid;
     private double saleamount;
     private double purcamount;
-    private int quantitysold;
-    private int quantityinstock;
+    private double quantitysold;
+    private double quantityinstock;
 
-    public stock(int itid,int itgroupid,double slamnt,double puramnt,int qtysold,int qtystck){
+    public stock(int itid,int itgroupid,double slamnt,double puramnt,double qtysold,double qtystck){
         super();
         this.purcamount=puramnt;
         this.saleamount=slamnt;
