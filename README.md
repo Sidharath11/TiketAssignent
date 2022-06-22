@@ -137,8 +137,9 @@ controller
     saleheadid int
   
   
-  In this project PartyMaster,ItemMaster,ItemGroupMaster,Purchase(PurchaseHead,PurchaseItems) and Sale(SaleHead,SaleItems) are associated with mysql database
-  
+  In this project PartyMaster,ItemMaster,ItemGroupMaster,Purchase(PurchaseHead,PurchaseItems) and 
+  Sale(SaleHead,SaleItems) are associated with mysql database
+ 
   and 
   
   Stock with MongoDb
