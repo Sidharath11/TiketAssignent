@@ -175,6 +175,8 @@ and add quantity in quantityinstock of mongodb document of corresponding item
 and then again add amount of sale in saleamount ,add quantity in quantitysold and subtract quantity from
 quantityinstock of mongodb document of corresponding updateditem
 
+#For intercommunication between Mysql and mongodb controller i use resttemplate as restapi
+with this i update stock according to sale and purchase
 
 Complete file structure
 
