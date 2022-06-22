@@ -1,3 +1,4 @@
+```bash
 # TiketAssignent
 Inventory Management MVC with spring boot using Mysql and MongoDB
 
@@ -153,3 +154,5 @@ controller
   "quantityinstock": 455,
   "_class": "com.tiketbakend.tiket.inventorymongodb.model.stock"
 }
+
+```
