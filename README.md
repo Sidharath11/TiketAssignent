@@ -2,8 +2,6 @@
 # TiketAssignent
 Inventory Management MVC with spring boot using Mysql and MongoDB
 
-Reactive Api not implemented yet
-
 It is a 3 tier architecture with file structure as :
 
 com.tiketbakend.tiket
