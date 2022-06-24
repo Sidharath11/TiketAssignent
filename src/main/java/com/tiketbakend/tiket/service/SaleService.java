@@ -20,6 +20,8 @@ import java.util.List;
 public class SaleService {
 
 
+    private static final String REDIS_CACHE_VALUE = "sale";
+    //@Cacheable(value = REDIS_CACHE_VALUE)
     public List<SalePurchase> getAll(SaleHeadRepository headrepo, SaleItemsRepository itemrepo){
         List<SalePurchase> sp=new ArrayList<>();
         List<Item> items=new ArrayList<>();
@@ -52,7 +54,7 @@ public class SaleService {
         return sp;
     }
 
-
+    //@CachePut(value = REDIS_CACHE_VALUE, key = "#pt.id")
     public SalePurchase create(SalePurchase pt, SaleHeadRepository purcheadrepo, SaleItemsRepository purcitemrepo, PartyMasterRepository partyrepo, ItemMasterRepository itemrepo){
         SaleHead phead=new SaleHead();
         phead.setTotalquantity(pt.getTotalquantity());
@@ -85,6 +87,7 @@ public class SaleService {
         return  new SaleService().getById(phead.getId(),purcheadrepo,purcitemrepo);
     }
 
+   // @Cacheable(value = REDIS_CACHE_VALUE, key = "#Id")
     public SalePurchase getById( int Id,SaleHeadRepository headrepo, SaleItemsRepository itemrepo){
         List<Item> items=new ArrayList<>();
         SaleHead p=headrepo.findByDeletedAndId(false,Id);
@@ -116,7 +119,7 @@ public class SaleService {
         return purchase;
     }
 
-
+//    @CacheEvict(value = REDIS_CACHE_VALUE, key = "#Id",allEntries = true)
     public SalePurchase updateById( int Id, SalePurchase pt,SaleHeadRepository purcheadrepo, SaleItemsRepository purcitemrepo, PartyMasterRepository partyrepo, ItemMasterRepository itemrepo){
         List<SaleItems> itm=purcitemrepo.findBysalehead_IdAndDeleted(Id,false);
         for (SaleItems pi:itm) {
@@ -156,7 +159,7 @@ public class SaleService {
 
         return new SaleService().getById(phead.getId(),purcheadrepo,purcitemrepo);
     }
-
+  //  @CacheEvict(value = REDIS_CACHE_VALUE, key = "#Id")
     public String deleteById( int Id,SaleHeadRepository purcheadrepo,SaleItemsRepository purcitemrepo){
 
         List<SaleItems> it=purcitemrepo.findBysalehead_IdAndDeleted(Id,false);

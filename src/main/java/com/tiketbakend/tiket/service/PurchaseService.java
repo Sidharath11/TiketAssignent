@@ -20,7 +20,8 @@ import java.util.List;
 public class PurchaseService {
 
 
-
+    private static final String REDIS_CACHE_VALUE = "purchase";
+   // @Cacheable(value = REDIS_CACHE_VALUE)
     public List<SalePurchase> getAll(PurchaseHeadRepository headrepo, PurchaseItemsRepository itemrepo){
         List<SalePurchase> sp=new ArrayList<>();
         List<Item> items=new ArrayList<>();
@@ -53,7 +54,7 @@ public class PurchaseService {
         return sp;
     }
 
-
+   // @CachePut(value = REDIS_CACHE_VALUE, key = "#pt.id")
     public SalePurchase create(SalePurchase pt, PurchaseHeadRepository purcheadrepo, PurchaseItemsRepository purcitemrepo, PartyMasterRepository partyrepo, ItemMasterRepository itemrepo){
         PurchaseHead phead=new PurchaseHead();
         phead.setTotalquantity(pt.getTotalquantity());
@@ -86,6 +87,7 @@ public class PurchaseService {
         return  new PurchaseService().getById(phead.getId(),purcheadrepo,purcitemrepo);
     }
 
+    //@Cacheable(value = REDIS_CACHE_VALUE, key = "#Id")
     public SalePurchase getById( int Id,PurchaseHeadRepository headrepo, PurchaseItemsRepository itemrepo){
         List<Item> items=new ArrayList<>();
         PurchaseHead p=headrepo.findByDeletedAndId(false,Id);
@@ -118,7 +120,7 @@ public class PurchaseService {
         return purchase;
     }
 
-
+   // @CacheEvict(value = REDIS_CACHE_VALUE, key = "#Id",allEntries = true)
     public SalePurchase updateById( int Id, SalePurchase pt,PurchaseHeadRepository purcheadrepo, PurchaseItemsRepository purcitemrepo, PartyMasterRepository partyrepo, ItemMasterRepository itemrepo){
         List<PurchaseItems> itm=purcitemrepo.findBypurchasehead_IdAndDeleted(Id,false);
         for (PurchaseItems pi:itm) {
@@ -160,7 +162,7 @@ public class PurchaseService {
 
         return new PurchaseService().getById(phead.getId(),purcheadrepo,purcitemrepo);
     }
-
+   // @CacheEvict(value = REDIS_CACHE_VALUE, key = "#Id")
     public String deleteById( int Id,PurchaseHeadRepository purcheadrepo,PurchaseItemsRepository purcitemrepo){
 
         List<PurchaseItems> it=purcitemrepo.findBypurchasehead_IdAndDeleted(Id,false);
